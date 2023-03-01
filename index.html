@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>COVID Statistics Form</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">COVID Stats</a>
+  </nav>
+  <div class="container my-4">
+    <h1>COVID Statistics Form</h1>
+    <form>
+      <div class="form-group">
+        <label for="country">Country</label>
+        <select name="country" class="form-control" id="country">
+          <option>Select a country</option>
+          <option>United States</option>
+          <option>India</option>
+          <option>Brazil</option>
+          <option>Russia</option>
+          <option>France</option>
+          <option>Germany</option>
+          <option>Turkey</option>
+          <option>United Kingdom</option>
+          <option>Argentina</option>
+          <option>Italy</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary" onclick="getCountryStats(event)">Get Statistics</button>
+    </form>
+
+    <label style="margin-top:25px ; " for="mx-auto ">Statistics </label>
+    <div id="hereToadd" class="hereToadd wrapper"></div>
+
+  </div>
+  <!-- Bootstrap JS and jQuery -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNVQ8O" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+
+
+
+
+<script>
+    const getCountryStats=(event)=>{
+        event.stopPropagation();
+        let country = document.querySelector("#country").value;
+        fetch(`/covid/${country}`)
+            .then(data => {
+            return data.json();
+            })
+            .then(ctr => {
+                
+               // ctr.cases.active;
+                
+                         //create a paragraph
+                        var p = document.createElement("p");
+                        //create a button
+                        
+                        //create a span tag
+                        var span = document.createElement("span");
+                        //set an atribute class name
+                        span.setAttribute("class", "content");
+                        //create a text content for button
+                       
+                        
+                        p.setAttribute(
+                            "class",
+                            "p-2 border rounded d-flex justify-content-between align-items-center"
+                        );
+                      
+
+                      
+                        var value = document.createTextNode( ctr.cases.active);
+                        span.append(value);
+
+                        var div = document.createElement("div");
+                        div.setAttribute("class","parent")
+                        div.append(span);
+                        p.append(div);
+                        
+
+                        hereToadd.prepend(p);
+                        console.log(ctr)
+                    
+                   
+                
+            
+            });
+
+
+    }
+  </script>
+</html>
